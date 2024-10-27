@@ -45,6 +45,6 @@ class LoginController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return response()->json(['success' => 'User registered successfully'], 201);
+        return response()->json(['success'=>true  , 'message'=> 'User registered successfully'], 201);
     }
 }

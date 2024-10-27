@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RoleController;
 
 require base_path('routes/myRoutes.php');
 
@@ -29,13 +31,20 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin-dashboard', [AdminController::class, 'index']);
 });
 
-
-Route::middleware(['auth:api', 'role:student'])->group(function () {
-    Route::get('/student-dashboard', [StudentController::class, 'index']);
+Route::group(['prefix' => 'user-role'], function () {
+    Route::get('/all-roles',[RoleController::class , 'index']);
+    Route::post('/create',[RoleController::class , 'createRole'] );
+    Route::post('/update/{role}',[RoleController::class ,'updateRole'] );
+    Route::delete('/delete/{role}' , [RoleController::class , 'deleteRole']);
 });
 
-Route::middleware(['auth:api', 'role:teacher'])->group(function () {
-    Route::get('/teacher-dashboard', [TeacherController::class, 'index']);
-});
+
+// Route::middleware(['auth:api', 'role:student'])->group(function () {
+//     Route::get('/student-dashboard', [StudentController::class, 'index']);
+// });
+
+// Route::middleware(['auth:api', 'role:teacher'])->group(function () {
+//     Route::get('/teacher-dashboard', [TeacherController::class, 'index']);
+// });
 
 
